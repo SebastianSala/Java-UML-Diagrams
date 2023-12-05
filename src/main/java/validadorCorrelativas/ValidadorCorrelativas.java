@@ -7,8 +7,6 @@ import validadorCorrelativas.clases.Materia;
 public class ValidadorCorrelativas {
 
     public static void main(String[] args) {
-        System.out.println("Hola mundo!");
-
         ValidadorCorrelativas validadorCorrelativas = new ValidadorCorrelativas();
         validadorCorrelativas.run();
     }
