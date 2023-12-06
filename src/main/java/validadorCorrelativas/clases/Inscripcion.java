@@ -13,7 +13,7 @@ public class Inscripcion {
     private Materia materia;
 
     public boolean aprobada() {
-        return ( this.alumnoPuedeInscribirAMateria(this.alumno, this.materia) );
+        return (this.alumnoPuedeInscribirAMateria(this.alumno, this.materia));
     }
 
     private boolean alumnoPuedeInscribirAMateria(Alumno alumno, Materia materia) {
@@ -26,7 +26,9 @@ public class Inscripcion {
             aproboCorrelativas = true;
         } else {
             aproboCorrelativas =
-                    materia.getMateriasCorrelativas().stream().filter(materiaCorrelativa -> alumno.getMateriasAprobadas().contains(materiaCorrelativa)).count() == materia.getMateriasCorrelativas().size();
+                    materia.getMateriasCorrelativas().stream()
+                            .allMatch(materiaCorrelativa ->
+                                    alumno.getMateriasAprobadas().contains(materiaCorrelativa));
         }
 
         return aproboCorrelativas;

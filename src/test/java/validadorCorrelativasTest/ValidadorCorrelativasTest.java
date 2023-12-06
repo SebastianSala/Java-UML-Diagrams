@@ -1,8 +1,9 @@
-package validadorCorrelativas;
+package validadorCorrelativasTest;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import validadorCorrelativas.Materias;
 import validadorCorrelativas.clases.Alumno;
 import validadorCorrelativas.clases.Inscripcion;
 import validadorCorrelativas.clases.Materia;
@@ -10,7 +11,8 @@ import validadorCorrelativas.clases.Materia;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ValidadorCorrelativasTest {
 
@@ -20,9 +22,9 @@ public class ValidadorCorrelativasTest {
 
     @BeforeEach
     public void inicializacionPrueba() {
-//        this.alumno = new Alumno();
-//        this.materia = new Materia();
-//        this.inscripcion = new Inscripcion();
+        this.alumno = null;
+        this.materia = null;
+        this.inscripcion = null;
     }
 
     @Order(1)
@@ -33,9 +35,7 @@ public class ValidadorCorrelativasTest {
         this.materia = new Materia(Materias.HISTORIA);
         this.inscripcion = new Inscripcion(alumno, materia);
 
-        boolean expected = true;
-        assertEquals(expected, this.inscripcion.aprobada());
-
+        assertTrue(this.inscripcion.aprobada());
     }
 
     @Order(2)
@@ -47,15 +47,13 @@ public class ValidadorCorrelativasTest {
                 new ArrayList<>(List.of(new Materia(Materias.MATEMATICA1), new Materia(Materias.LENGUA1)))
         );
         this.materia = new Materia(Materias.MATEMATICA2);
-        this.materia.agregarCorrelativas(new Materia(Materias.MATEMATICA1));
+//        this.materia.agregarCorrelativas(new Materia(Materias.MATEMATICA1));
         this.materia.agregarCorrelativas(List.of(new Materia(Materias.MATEMATICA1), new Materia(Materias.LENGUA1)));
 
 
         this.inscripcion = new Inscripcion(alumno, materia);
 
-        boolean expected = true;
-        assertEquals(expected, this.inscripcion.aprobada());
-
+        assertTrue(this.inscripcion.aprobada());
     }
 
     @Order(3)
@@ -69,9 +67,7 @@ public class ValidadorCorrelativasTest {
 
         this.inscripcion = new Inscripcion(alumno, materia);
 
-        boolean expected = false;
-        assertEquals(expected, this.inscripcion.aprobada());
-
+        assertFalse(this.inscripcion.aprobada());
     }
 
 }
