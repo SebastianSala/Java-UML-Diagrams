@@ -3,6 +3,8 @@ package validadorCorrelativas.clases;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import validadorCorrelativas.clases.exceptions.SinMateriasAprobadasException;
+import validadorCorrelativas.enums.Materias;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,25 +14,33 @@ public class Inscripcion {
     private Alumno alumno;
     private Materia materia;
 
-    public boolean aprobada() {
+    public boolean aprobada() throws SinMateriasAprobadasException {
         return (this.alumnoPuedeInscribirAMateria(this.alumno, this.materia));
     }
 
-    private boolean alumnoPuedeInscribirAMateria(Alumno alumno, Materia materia) {
+    private boolean alumnoPuedeInscribirAMateria(Alumno alumno, Materia materia) throws SinMateriasAprobadasException {
 
         boolean aproboCorrelativas;
 
         if (!materia.tieneCorrelativas()) {
-//            return true;
             // if there is no correlative materias required, then the alumno can inscribir.
             aproboCorrelativas = true;
         } else {
-            aproboCorrelativas =
-                    materia.getMateriasCorrelativas().stream()
-                            .allMatch(materiaCorrelativa ->
-                                    alumno.getMateriasAprobadas().contains(materiaCorrelativa));
-        }
 
+            aproboCorrelativas = materia.getMateriasCorrelativas().stream()
+                                .allMatch(materiaCorrelativa ->
+
+                            {
+                                try {
+                                    return alumno.materiaEstaAprobada(materiaCorrelativa);
+                                } catch (SinMateriasAprobadasException e) {
+                                    System.out.println("Exception arrojada: El alumno no tiene todas las materias correlativas aprobadas");
+                                    return false;
+                                }
+                            });
+//            alumno.materiaEstaAprobada(new Materia(Materias.HISTORIA));
+//            aproboCorrelativas = true;
+        }
         return aproboCorrelativas;
 
     }

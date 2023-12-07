@@ -1,4 +1,4 @@
-package validadorCorrelativas;
+package validadorCorrelativas.enums;
 
 public enum Materias {
     MATEMATICA1,

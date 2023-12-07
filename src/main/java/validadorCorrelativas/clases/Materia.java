@@ -3,7 +3,7 @@ package validadorCorrelativas.clases;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import validadorCorrelativas.Materias;
+import validadorCorrelativas.enums.Materias;
 
 import java.util.ArrayList;
 import java.util.List;

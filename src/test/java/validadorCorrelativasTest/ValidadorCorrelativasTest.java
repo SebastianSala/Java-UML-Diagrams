@@ -3,7 +3,8 @@ package validadorCorrelativasTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import validadorCorrelativas.Materias;
+import validadorCorrelativas.clases.exceptions.SinMateriasAprobadasException;
+import validadorCorrelativas.enums.Materias;
 import validadorCorrelativas.clases.Alumno;
 import validadorCorrelativas.clases.Inscripcion;
 import validadorCorrelativas.clases.Materia;
@@ -11,8 +12,7 @@ import validadorCorrelativas.clases.Materia;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ValidadorCorrelativasTest {
 
@@ -29,7 +29,7 @@ public class ValidadorCorrelativasTest {
 
     @Order(1)
     @Test
-    public void alumnoInscribeAMateriaSinCorrelativaNecesariaSatisfactoriamente() {
+    public void alumnoInscribeAMateriaSinCorrelativaNecesariaSatisfactoriamente() throws SinMateriasAprobadasException {
 
         this.alumno = new Alumno();
         this.materia = new Materia(Materias.HISTORIA);
@@ -40,7 +40,7 @@ public class ValidadorCorrelativasTest {
 
     @Order(2)
     @Test
-    public void alumnoConMateriasAprobadasInscribeAMateriaConCorrelativaNecesariaSatisfactoriamente() {
+    public void alumnoConMateriasAprobadasInscribeAMateriaConCorrelativaNecesariaSatisfactoriamente() throws SinMateriasAprobadasException {
 
         //        List<Materia> materias = List.of(new Materia(), new Materia());
         this.alumno = new Alumno(
@@ -58,7 +58,7 @@ public class ValidadorCorrelativasTest {
 
     @Order(3)
     @Test
-    public void alumnoConMateriasNoAprobadasInscribeAMateriaConCorrelativaNecesariaFallando() {
+    public void alumnoConMateriasNoAprobadasInscribeAMateriaConCorrelativaNecesariaFallando() throws SinMateriasAprobadasException {
 
         this.alumno = new Alumno(List.of(new Materia(Materias.LENGUA1)));
 
@@ -67,6 +67,7 @@ public class ValidadorCorrelativasTest {
 
         this.inscripcion = new Inscripcion(alumno, materia);
 
+//        assertThrowsExactly(SinMateriasAprobadasException.class, () -> this.inscripcion.aprobada());
         assertFalse(this.inscripcion.aprobada());
     }
 
